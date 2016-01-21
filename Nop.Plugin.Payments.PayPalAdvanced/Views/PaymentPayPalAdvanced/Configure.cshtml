@@ -1,0 +1,240 @@
+﻿@{
+    Layout = "";
+}
+@model ConfigurationModel
+@using Nop.Plugin.Payments.PayPalAdvanced.Models;
+@using Nop.Web.Framework;
+@Html.Action("StoreScopeConfiguration", "Setting", new { area = "Admin" })
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <style type="text/css">
+        .delkey, a.delkey:hover{
+            color:red;
+            cursor:pointer;            
+        }
+                                                 
+        .delete {
+            padding-top: 5px;
+        }
+                
+        #newLicenseKey {
+            width: 400px;
+        }
+
+        td.adminTitle {
+            vertical-align: top;
+        }
+
+        .licenseKeysTbl {
+            border-collapse:collapse;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+        .licenseKeysTbl th, .licenseKeysTbl td {
+            border: 1px solid #ccc;            
+            padding-right:5px; 
+            padding-left:5px;           
+        }       
+    </style>
+    
+    <table class="adminContent">
+        <tr>
+            <td colspan="2">
+                <b>
+                    If you're using this gateway ensure that your primary store currency is supported
+                    by Paypal.
+                </b>
+                <br />                
+                <p>Please follow these steps to configure this payment gateway. For detail instructions, <a href="/Plugins/Payments.PayPalAdvanced/PayPalAdvanced Setup Guide.pdf" target="_blank">click here</a>.</p>                
+                <ol>
+                    <li>
+                        <p>Create a Payflow (Merchant) Account</p>
+                        <ul>
+                            <li>To create a test account, visit <a href="https://registration.paypal.com" target="_blank">https://registration.paypal.com</a>
+                                <br />
+                                Make sure to select <strong>"I do not have a Processor. Setup test account."</strong><br />
+                                Also make sure to click <strong>"Set up PayPal Developer Sandbox"</strong> and enter an email address on the popup.
+                            </li>
+                            <li>To create a live account, visit <a href="https://www.paypal.com/webapps/mpp/paypal-payments-advanced" target="_blank">https://www.paypal.com/webapps/mpp/paypal-payments-advanced</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        Once the merchant account has been created, login and configure it accordingly (<a href="/Plugins/Payments.PayPalAdvanced/PayPalAdvanced Setup Guide.pdf" target="_blank">see detail instructions</a>).
+                    </li>
+                    <li>Enter your Merchant Account information below</li>                    
+                </ol>                                                
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.TransactModeId_OverrideForStore, model => model.TransactModeId, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.TransactModeValues):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("TransactModeId", Model.TransactModeValues)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.UseSandbox_OverrideForStore, model => model.UseSandbox, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.UseSandbox):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.UseSandbox)
+                @Html.ValidationMessageFor(model => model.UseSandbox)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.PFPartner_OverrideForStore, model => model.PFPartner, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.PFPartner):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PFPartner)
+                @Html.ValidationMessageFor(model => model.PFPartner)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.PFMerchantLogin_OverrideForStore, model => model.PFMerchantLogin, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.PFMerchantLogin):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PFMerchantLogin)
+                @Html.ValidationMessageFor(model => model.PFMerchantLogin)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.PFUser_OverrideForStore, model => model.PFUser, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.PFUser):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PFUser)
+                @Html.ValidationMessageFor(model => model.PFUser)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.PFPassword_OverrideForStore, model => model.PFPassword, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.PFPassword):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PFPassword)
+                @Html.ValidationMessageFor(model => model.PFPassword)                
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.IsEncryptPassword_OverrideForStore, model => model.IsEncryptPassword, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.IsEncryptPassword):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.IsEncryptPassword)
+                @Html.ValidationMessageFor(model => model.IsEncryptPassword)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.AdditionalFee_OverrideForStore, model => model.AdditionalFee, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.AdditionalFee):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AdditionalFee)
+                @Html.ValidationMessageFor(model => model.AdditionalFee)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.AdditionalFeePercentage_OverrideForStore, model => model.AdditionalFeePercentage, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.AdditionalFeePercentage):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AdditionalFeePercentage)
+                @Html.ValidationMessageFor(model => model.AdditionalFeePercentage)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.SkipPaymentInfo_OverrideForStore, model => model.SkipPaymentInfo, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.SkipPaymentInfo):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SkipPaymentInfo)
+                @Html.ValidationMessageFor(model => model.SkipPaymentInfo)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.EnableMobileOptimizedLayout_OverrideForStore, model => model.EnableMobileOptimizedLayout, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(model => model.EnableMobileOptimizedLayout):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.EnableMobileOptimizedLayout)
+                @Html.ValidationMessageFor(model => model.EnableMobileOptimizedLayout)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.LicenseKeys):
+            </td>
+            <td>
+                <table id="licenseKeys" class="licenseKeysTbl">
+                    <tr>
+                        <th>License Type</th>
+                        <th>Url/Domain</th>
+                        <th>License Key</th>
+                        <th></th>
+                    </tr>
+                    @if (Model.LicenseKeys != null)
+                    {
+                        foreach (var license in Model.LicenseKeys)
+                        {
+                            <tr id="LicenseRow_@(license.Id)">
+                                <td>@license.Type</td>
+                                <td>@license.Host</td>
+                                <td>@license.LicenseKey</td>
+                                <td class="delete"><a class="delkey" id="DeleteKey_@(license.Id)" data-id="@(license.Id)">Delete</a></td>
+                            </tr>
+                        }
+                    }
+                </table>
+                @Html.TextBox("newLicenseKey")
+                <input type="button" id="addLicenseKey" value="Add" />
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#addLicenseKey").click(function () {
+                            $.post("@(Url.RouteUrl("Plugin.Payments.PayPalAdvanced.AddLicenseKey"))", { licenseKey: $("#newLicenseKey").val() }, function(html) {
+                                $(html).appendTo("#licenseKeys");
+                                rebindDeleteKeys();
+                                $("#newLicenseKey").val("");
+                            });
+                        });
+                        rebindDeleteKeys();
+                    });
+
+                    function rebindDeleteKeys() {
+                        $(".delkey").unbind("click").click(function () {
+                            $.post("@(Url.RouteUrl("Plugin.Payments.PayPalAdvanced.DeleteLicenseKey"))", { id: $(this).data("id") }, function (id) {
+                                $("#LicenseRow_" + id).remove();
+                            });
+                        });
+                    }
+                </script>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+            </td>
+        </tr>
+    </table>
+
+}

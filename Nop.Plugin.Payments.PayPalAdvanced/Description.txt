@@ -1,0 +1,8 @@
+﻿Group: Payment methods
+FriendlyName: Credit Card or PayPal
+SystemName: Payments.PayPalAdvanced
+Version: 1.0
+SupportedVersions: 3.70
+Author: Cloudberry Software
+DisplayOrder: 1
+FileName: Nop.Plugin.Payments.PayPalAdvanced.dll

@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";        
+}
+@model Nop.Plugin.Payments.PayPalAdvanced.Models.PaymentFormModel
+@using Nop.Web.Framework;
+
+<div class="page pay-order-page">
+    
+    <div class="page-title">
+        <h1>Order Payment</h1>        
+    </div>
+
+    <div class="page-body" style="text-align:center;">
+        @if (@Model.Success)
+        {
+            <div style="overflow:auto;">
+                <iframe src="https://@(Model.PayflowUrl)?MODE=@(Model.PayflowMode)&SECURETOKEN=@(Model.PayflowSecureToken)&SECURETOKENID=@(Model.PayflowSecureTokenId)"
+                        width="500" height="610" frameborder="0" border="0" allowtransparency="true"></iframe>
+            </div>
+        }
+        else
+        {
+            <div class="title" style="color:red;">
+                Sorry, we are unable to process your payment.<br />
+                @Model.ErrorMsg
+            </div>
+            <div style="margin-top:10px;">                
+                <a href="~/ppa/payment/@(Model.OrderId)"><b>Click here to retry payment</b></a>
+            </div>
+        }
+    </div>
+</div>

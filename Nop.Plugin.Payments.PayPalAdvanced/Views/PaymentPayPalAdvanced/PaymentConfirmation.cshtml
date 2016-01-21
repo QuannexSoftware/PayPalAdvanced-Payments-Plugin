@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";        
+}
+@model Nop.Plugin.Payments.PayPalAdvanced.Models.PaymentConfirmationModel
+@using Nop.Web.Framework;
+<div class="page pay-order-page">
+    
+    <div class="page-title">
+        <h1>Payment Confirmation</h1>        
+    </div>
+
+    <div class="page-body" style="text-align:center;">
+        <div class="section">
+            @if (Model.ResultCode == "0")
+            {
+                <div class="title" style="color:green;">
+                    <strong>Your payment has been processed successfully!</strong>
+                </div>
+                <br />
+                <div>
+                    Order #: @Model.OrderId
+                </div>
+                <div>Payment Confirmation #: @Model.ConfirmationId</div>
+                <div>
+                    <a href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })"><b>Click here to view your order details</b></a>
+                </div>
+            }
+            else
+            {
+                <div class="title" style="color:red;">
+                    <strong>Sorry, we are unable to process your payment.</strong>                    
+                </div>
+                <div>
+                    <a href="~/ppa/payment/@(Model.OrderId)"><b>Click here to retry payment</b></a>
+                </div>
+            }            
+        </div>     
+    </div>
+</div>
